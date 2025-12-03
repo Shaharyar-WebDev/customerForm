@@ -4,12 +4,16 @@ namespace App\Filament\Resources\Customers\Tables;
 
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
+use Filament\Actions\Action;
+use Filament\Actions\BulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Actions\DeleteAction;
+use App\Jobs\SendCustomerMessageJob;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Notifications\Notification;
 
 class CustomersTable
 {
@@ -51,6 +55,7 @@ class CustomersTable
                 TextColumn::make('status')
                     ->label('Status')
                     ->badge()
+                    ->toggleable()
                     ->colors([
                         'warning' => 'pending',
                         'success' => 'sent',
@@ -63,7 +68,7 @@ class CustomersTable
                     ->sortable()
                     ->toggleable(),
 
-                TextColumn::make('remarks')
+                TextColumn::make('error')
                     ->label('Remarks')
                     ->toggleable()
                     ->formatStateUsing(function ($state) {
@@ -85,10 +90,42 @@ class CustomersTable
                 EditAction::make()
                     ->slideover(),
                 DeleteAction::make(),
+                Action::make('resend_whatsapp')
+                    ->label('Resend WhatsApp')
+                    ->icon('heroicon-o-envelope')
+                    ->color('info')
+                    ->requiresConfirmation()
+                    ->visible(fn($record) => $record->status !== 'sent')
+                    ->action(function ($record) {
+                        dispatch(new SendCustomerMessageJob($record));
+                        Notification::make()
+                            ->title('WhatsApp Resend Triggered')
+                            ->body("Message resend queued for {$record->name}")
+                            ->success()
+                            ->send();
+                    }),
             ])
+            ->checkIfRecordIsSelectableUsing(
+                fn($record): bool => $record->status !== 'sent',
+            )
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
+                    BulkAction::make('resend_whatsapp')
+                        ->label('Resend WhatsApp')
+                        ->icon('heroicon-o-envelope')
+                        ->color('info')
+                        ->requiresConfirmation()
+                        ->action(function ($records) {
+                            foreach ($records as $record) {
+                                dispatch(new SendCustomerMessageJob($record));
+                                Notification::make()
+                                    ->title('WhatsApp Resend Triggered')
+                                    ->body("Message resend queued for {$record->name}")
+                                    ->success()
+                                    ->send();
+                            }
+                        }),
                 ]),
             ]);
     }

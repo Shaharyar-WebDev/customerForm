@@ -34,15 +34,4 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
-
-    'twilio' => [
-        'sid' => env('TWILIO_SID'),
-        'token' => env('TWILIO_TOKEN'),
-        'whatsapp_from' => env('TWILIO_WHATSAPP_FROM'),
-    ],
-
-    'ultramsg' => [
-        'api_url' => env('ULTRAMSG_API_URL', 'https://api.ultramsg.com/instance153871/messages/chat'),
-        'token' => env('ULTRAMSG_TOKEN', 'f41vpegfap7887b3'),
-    ],
 ];

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Jobs\SendCustomerMessageJob;
 use Illuminate\Database\Eloquent\Model;
+use Filament\Notifications\Notification;
 
 class Customer extends Model
 {
@@ -13,6 +14,9 @@ class Customer extends Model
         'phone_number',
         'frequently_purchased_items',
         'visit_frequency',
+        'status',
+        'error',
+        'sent_at',
         'category',
     ];
 
@@ -24,7 +28,7 @@ class Customer extends Model
     public static function booted()
     {
         static::created(function ($customer) {
-            dispatch(new SendCustomerMessageJob($customer));
+            dispatch(new SendCustomerMessageJob($customer))->afterCommit();
         });
     }
 }

@@ -21,6 +21,11 @@ class GeneralSettings extends Settings
     public int $currency_id;
 
     public string $content_width;
+
+    public ?string $api_url;
+
+    public ?string $api_token;
+
     public static function group(): string
     {
         return 'general';

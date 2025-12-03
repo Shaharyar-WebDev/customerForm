@@ -60,41 +60,49 @@ class ManageGeneralSettings extends SettingsPage
                         //     ->label('Default currency')
                         //     ->options(Currency::pluck('name', 'id'))
                     ]),
-                    Tab::make('Application')->schema([
-                        Select::make('navigation_type')
-                            ->required()
-                            ->options([
-                                'sidebar' => 'Sidebar',
-                                'topbar' => 'Topbar',
-                            ]),
-                        Select::make('content_width')
-                            ->required()
-                            ->options([
-                                '7xl' => 'Large',
-                                'full' => 'Full',
-                            ]),
-                        Toggle::make('spa_mode')
-                            ->required()
-                            ->reactive(),
-                        // Toggle::make('website_spa_mode')
-                        //     ->required()
-                        //     ->reactive(),
-                        Toggle::make('spa_mode_prefetching')
-                            ->required()
-                            ->visible(fn($get) => $get('spa_mode') === true),
+                    Tab::make('Application')
+                        ->schema([
+                            Select::make('navigation_type')
+                                ->required()
+                                ->options([
+                                    'sidebar' => 'Sidebar',
+                                    'topbar' => 'Topbar',
+                                ]),
+                            Select::make('content_width')
+                                ->required()
+                                ->options([
+                                    '7xl' => 'Large',
+                                    'full' => 'Full',
+                                ]),
+                            Toggle::make('spa_mode')
+                                ->required()
+                                ->reactive(),
+                            // Toggle::make('website_spa_mode')
+                            //     ->required()
+                            //     ->reactive(),
+                            Toggle::make('spa_mode_prefetching')
+                                ->required()
+                                ->visible(fn($get) => $get('spa_mode') === true),
 
-                        Action::make('reset_cache')
-                            ->label('Reset cache')
-                            ->action(function () {
-                                $this->redirect(route('optimize'));
-                            }),
+                            Action::make('reset_cache')
+                                ->label('Reset cache')
+                                ->action(function () {
+                                    $this->redirect(route('optimize'));
+                                }),
 
-                        Action::make('clear_cache')
-                            ->label('Clear cache')
-                            ->action(function () {
-                                $this->redirect(route('optimize:clear'));
-                            }),
-                    ]),
+                            Action::make('clear_cache')
+                                ->label('Clear cache')
+                                ->action(function () {
+                                    $this->redirect(route('optimize:clear'));
+                                }),
+                        ]),
+                    Tab::make('Api')
+                        ->schema([
+                            TextInput::make('api_url')
+                                ->nullable(),
+                            TextInput::make('api_token')
+                                ->nullable(),
+                        ]),
                 ])->columnSpanFull()
                     ->columns(2)
                     ->persistTabInQueryString()

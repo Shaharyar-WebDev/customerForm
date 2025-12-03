@@ -48,7 +48,7 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('')
-            // ->login(null)
+            ->login()
             ->profile()
             ->globalSearch(false)
             ->defaultThemeMode(ThemeMode::Light)
@@ -87,6 +87,7 @@ class AdminPanelProvider extends PanelProvider
                 // AccountWidget::class,
                 // FilamentInfoWidget::class,
             ])
+            ->databaseNotifications()
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
@@ -99,7 +100,7 @@ class AdminPanelProvider extends PanelProvider
                 DispatchServingFilamentEvent::class,
             ])
             ->authMiddleware([
-                // Authenticate::class,
+                Authenticate::class,
             ]);
     }
 

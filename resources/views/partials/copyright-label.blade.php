@@ -1,6 +1,6 @@
 <div class="cp-right-div">
     <span>
-        © Copyright Label
+        © Copyright by <a href="https://shaharyar-portofolio.netlify.app/" target="__blank"> Shaharyar Ahmed </a>
          {{-- by Shaharyar Ahmed --}}
     </span>
     {{-- Developed By Shaharyar Ahmed --}}

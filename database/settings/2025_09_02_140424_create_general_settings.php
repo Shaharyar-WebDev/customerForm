@@ -19,5 +19,9 @@ return new class extends SettingsMigration {
         $this->migrator->add('general.spa_mode', false);
         $this->migrator->add('general.website_spa_mode', false);
         $this->migrator->add('general.spa_mode_prefetching', false);
+
+        // Api
+        $this->migrator->add('general.api_url', null);
+        $this->migrator->add('general.api_token', null);
     }
 };
