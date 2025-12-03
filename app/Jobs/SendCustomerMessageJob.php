@@ -61,7 +61,7 @@ class SendCustomerMessageJob implements ShouldQueue
             return;
         }
 
-        if ($customer->status !== 'sent') {
+        if ($customer->status === 'sent') {
             Log::warning("Skipping WhatsApp message for customer ID {$customer->name}: Its already sent.");
             return;
         }
