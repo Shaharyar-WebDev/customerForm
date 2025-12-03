@@ -51,7 +51,7 @@ class AdminPanelProvider extends PanelProvider
             // ->login(null)
             ->profile()
             ->globalSearch(false)
-            ->defaultThemeMode(ThemeMode::Dark)
+            ->defaultThemeMode(ThemeMode::Light)
             ->sidebarCollapsibleOnDesktop(true)
             ->sidebarFullyCollapsibleOnDesktop(false)
             ->unsavedChangesAlerts(false)
