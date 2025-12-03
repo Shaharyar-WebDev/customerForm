@@ -1,0 +1,213 @@
+/* blob animation keyframe */
+@keyframes blob-animation {
+    0% {
+        clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%,
+                80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%,
+                47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%,
+                17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%);
+    }
+
+    25% {
+        clip-path: polygon(70% 40%, 95% 60%, 90% 25%, 80% 5%,
+                75% 5%, 70% 35%, 55% 60%, 50% 65%,
+                45% 55%, 40% 35%, 25% 70%, 5% 60%,
+                15% 95%, 25% 75%, 70% 95%, 70% 40%);
+    }
+
+    50% {
+        clip-path: polygon(76% 46%, 98% 63%, 96% 28%, 87% 2%,
+                82% 4%, 74% 34%, 62% 64%, 54% 70%,
+                49% 60%, 47% 36%, 29% 78%, 3% 67%,
+                19% 102%, 29% 78%, 78% 99%, 76% 46%);
+    }
+
+    75% {
+        clip-path: polygon(72% 42%, 97% 59%, 94% 24%, 83% 1%,
+                78% 3%, 70% 33%, 58% 63%, 51% 69%,
+                46% 59%, 43% 35%, 26% 77%, 2% 66%,
+                16% 101%, 26% 77%, 74% 98%, 72% 42%);
+    }
+
+    100% {
+        clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%,
+                80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%,
+                47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%,
+                17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%);
+    }
+}
+
+.fi-loading-indicator {
+    animation: spin 0.5s ease-in-out infinite;
+    color: white;
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+#nprogress .peg {
+    box-shadow: 0 0 10px var(--primary-400), 0 0 5px var(--primary-600) !important;
+}
+
+#nprogress .bar {
+    background: var(--primary-500) !important;
+}
+
+#nprogress {
+    display: none;
+}
+
+/* Global variables */
+:root {
+  --bprogress-color: var(--primary-500);
+  --bprogress-height: 2px;
+  --bprogress-spinner-size: 18px;
+  --bprogress-spinner-animation-duration: 400ms;
+  --bprogress-spinner-border-size: 2px;
+  --bprogress-box-shadow: 0 0 10px var(---primary-400), 0 0 5px var(--primary-400);
+  --bprogress-z-index: 99999;
+  --bprogress-spinner-top: 15px;
+  --bprogress-spinner-bottom: auto;
+  --bprogress-spinner-right: 15px;
+  --bprogress-spinner-left: auto;
+}
+
+.bprogress {
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  z-index: var(--bprogress-z-index);
+}
+
+.bprogress .bar {
+  background: var(--bprogress-color);
+  position: fixed;
+  z-index: var(--bprogress-z-index);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--bprogress-height);
+}
+
+/* Fancy blur effect */
+.bprogress .peg {
+  display: block;
+  position: absolute;
+  right: 0;
+  width: 100px;
+  height: 100%;
+  box-shadow: var(--bprogress-box-shadow);
+  opacity: 1.0;
+  transform: rotate(3deg) translate(0px, -4px);
+}
+
+/* Remove these to get rid of the spinner */
+.bprogress .spinner {
+  display: none;
+  position: fixed;
+  z-index: var(--bprogress-z-index);
+  top: var(--bprogress-spinner-top);
+  bottom: var(--bprogress-spinner-bottom);
+  right: var(--bprogress-spinner-right);
+  left: var(--bprogress-spinner-left);
+}
+
+.bprogress .spinner-icon {
+  width: var(--bprogress-spinner-size);
+  height: var(--bprogress-spinner-size);
+  box-sizing: border-box;
+  border: solid var(--bprogress-spinner-border-size) transparent;
+  border-top-color: var(--bprogress-color);
+  border-left-color: var(--bprogress-color);
+  border-radius: 50%;
+  -webkit-animation: bprogress-spinner var(--bprogress-spinner-animation-duration) linear infinite;
+  animation: bprogress-spinner var(--bprogress-spinner-animation-duration) linear infinite;
+}
+
+/* Custom parent styles */
+.bprogress-custom-parent {
+  overflow: hidden;
+  position: relative;
+}
+
+.bprogress-custom-parent .bprogress .spinner,
+.bprogress-custom-parent .bprogress .bar {
+  position: absolute;
+}
+
+/* Styles for indeterminate progress mode */
+.bprogress .indeterminate {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--bprogress-height);
+  overflow: hidden;
+}
+
+.bprogress .indeterminate .inc,
+.bprogress .indeterminate .dec {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  background-color: var(--bprogress-color);
+}
+
+.bprogress .indeterminate .inc {
+  animation: bprogress-indeterminate-increase 2s infinite;
+}
+
+.bprogress .indeterminate .dec {
+  animation: bprogress-indeterminate-decrease 2s 0.5s infinite;
+}
+
+@-webkit-keyframes bprogress-spinner {
+  0%   { -webkit-transform: rotate(0deg); transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
+}
+
+@keyframes bprogress-spinner {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes bprogress-indeterminate-increase {
+  from { left: -5%; width: 5%; }
+  to { left: 130%; width: 100%; }
+}
+
+@keyframes bprogress-indeterminate-decrease {
+  from { left: -80%; width: 80%; }
+  to { left: 110%; width: 10%; }
+}
+
+.fi-ta-col.advanced-tables-table-loading-overlay {
+    position: relative;
+    display: inline-block;      /* keep <a> inline-block for width */
+    width: 100%;                /* fill the td */
+    min-height: 1.5em;          /* ensure height for skeleton */
+}
+
+/* Hide all children */
+.fi-ta-col.advanced-tables-table-loading-overlay * {
+    opacity: 0;
+}
+
+/* Skeleton pulse overlay */
+.fi-ta-col.advanced-tables-table-loading-overlay::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0.25rem;
+    right: 0.25rem;
+    height: 0.75rem;
+    border-radius: 9999px;
+    background-color: rgba(200, 200, 200, 0.3); /* fallback color */
+    transform: translateY(-50%);
+    animation: pulse 1.5s ease-in-out infinite;
+    display: block;
+}
+
+/* Pulse animation */
+@keyframes pulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.6; }
+}

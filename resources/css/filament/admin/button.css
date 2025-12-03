@@ -1,0 +1,42 @@
+.fi-btn {
+    @apply transition-all duration-300 ease-in-out relative overflow-hidden !shadow-lg;
+}
+
+.fi-btn:active {
+    transform: scale(0.98);
+}
+
+.fi-btn.fi-color-primary {
+    @apply hover:!shadow-primary-500/50 bg-gradient-to-r from-primary-500 to-primary-400;
+}
+
+.fi-btn.fi-color-danger {
+    @apply hover:!shadow-danger-500/50 bg-gradient-to-r from-danger-500 to-danger-400;
+}
+
+
+.fi-btn.fi-color-info {
+    @apply hover:!shadow-info-500/50 bg-gradient-to-r from-info-500 to-info-400;
+}
+
+
+.fi-btn.fi-color-warning {
+    @apply hover:!shadow-warning-500/50 bg-gradient-to-r from-warning-500 to-warning-400;
+}
+
+
+.fi-btn.fi-color-success {
+    @apply hover:!shadow-success-500/50 bg-gradient-to-r from-success-500 to-success-400;
+}
+
+.fi-btn.fi-color-gray {
+    @apply hover:!shadow-gray-500/50 bg-gradient-to-r from-gray-500 to-gray-400;
+}
+
+.fi-btn, .fi-sidebar-item-btn {
+    @apply !rounded-md px-3;
+}
+
+.fi-btn{
+    @apply rounded-2xl;
+}
