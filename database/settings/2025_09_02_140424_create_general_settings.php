@@ -23,5 +23,7 @@ return new class extends SettingsMigration {
         // Api
         $this->migrator->add('general.api_url', null);
         $this->migrator->add('general.api_token', null);
+        $this->migrator->add('general.message_template', 'Hello {name}!');
+
     }
 };

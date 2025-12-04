@@ -2,20 +2,21 @@
 
 namespace App\Filament\Pages\Settings;
 
-use App\Filament\Support\Traits\Settings\HasSettingsNavigation;
-use App\Settings\GeneralSettings;
 use BackedEnum;
 use Filament\Actions\Action;
-use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Toggle;
-use Filament\Pages\SettingsPage;
-use Filament\Schemas\Components\Tabs;
-use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Schemas\Schema;
+use Filament\Pages\SettingsPage;
+use App\Settings\GeneralSettings;
 use Filament\Support\Icons\Heroicon;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Toggle;
+use Filament\Schemas\Components\Tabs;
+use Filament\Forms\Components\Textarea;
 use Illuminate\Support\Facades\Storage;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\FileUpload;
+use Filament\Schemas\Components\Tabs\Tab;
+use App\Filament\Support\Traits\Settings\HasSettingsNavigation;
 
 class ManageGeneralSettings extends SettingsPage
 {
@@ -101,6 +102,8 @@ class ManageGeneralSettings extends SettingsPage
                             TextInput::make('api_url')
                                 ->nullable(),
                             TextInput::make('api_token')
+                                ->nullable(),
+                            Textarea::make('message_template')
                                 ->nullable(),
                         ]),
                 ])->columnSpanFull()

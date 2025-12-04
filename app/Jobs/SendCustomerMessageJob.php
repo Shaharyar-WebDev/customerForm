@@ -25,6 +25,7 @@ class SendCustomerMessageJob implements ShouldQueue
     public Customer $customer;
     public ?string $api_url;
     public ?string $api_token;
+    public ?string $message_template;
 
     public function __construct(Customer $customer)
     {
@@ -32,6 +33,7 @@ class SendCustomerMessageJob implements ShouldQueue
         $this->customer = $customer;
         $this->api_url = $settings->api_url;
         $this->api_token = $settings->api_token;
+        $this->message_template = $settings->message_template;
 
         if (empty($this->api_url) || empty($this->api_token)) {
             foreach (User::all() as $user) {
@@ -75,10 +77,15 @@ class SendCustomerMessageJob implements ShouldQueue
 
         $apiUrl = $this->api_url;
         $token = $this->api_token;
+        $template = $this->message_template ?? "Hello {name}!";
 
         $to = "+92{$customer->phone_number}";
 
-        $messageBody = "Hello {$customer->name}, thanks for visiting!";
+        $messageBody = str_replace(
+            ['{name}', '{phone}', '{id}'],
+            [$customer->name, $customer->phone_number, $customer->id],
+            $template
+        );
 
         $response = Http::asForm()->post($apiUrl, [
             'token' => $token,
