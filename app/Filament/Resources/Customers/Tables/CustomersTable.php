@@ -85,6 +85,7 @@ class CustomersTable
             ])
             ->reorderableColumns()
             ->defaultSort('date', 'desc')
+            ->poll('10s')
             ->recordActions([
                 // ViewAction::make(),
                 EditAction::make()
@@ -95,7 +96,7 @@ class CustomersTable
                     ->icon('heroicon-o-envelope')
                     ->color('info')
                     ->requiresConfirmation()
-                    ->visible(fn($record) => $record->status !== 'sent')
+                    ->visible(fn($record) => $record->status === 'failed')
                     ->action(function ($record) {
                         dispatch(new SendCustomerMessageJob($record));
                         Notification::make()
@@ -106,7 +107,7 @@ class CustomersTable
                     }),
             ])
             ->checkIfRecordIsSelectableUsing(
-                fn($record): bool => $record->status !== 'sent',
+                fn($record): bool => $record->status === 'failed',
             )
             ->toolbarActions([
                 BulkActionGroup::make([
