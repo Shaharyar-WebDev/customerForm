@@ -24,12 +24,14 @@ class CustomersTable
                 TextColumn::make('name')
                     ->label('Customer Name')
                     ->searchable()
+                    ->copyable()
                     ->sortable()
                     ->toggleable(),
 
                 TextColumn::make('phone_number')
                     ->label('WhatsApp No.')
                     ->prefix('+92')
+                    ->copyable()
                     ->searchable()
                     ->sortable()
                     ->toggleable(),
