@@ -3,6 +3,7 @@
 namespace App\Filament\Pages\Settings;
 
 use BackedEnum;
+use App\ApiChannel;
 use Filament\Actions\Action;
 use Filament\Schemas\Schema;
 use Filament\Pages\SettingsPage;
@@ -105,6 +106,11 @@ class ManageGeneralSettings extends SettingsPage
                                 ->nullable(),
                             Textarea::make('message_template')
                                 ->nullable(),
+                            Select::make('api_channel')
+                                ->options([
+                                    ApiChannel::WHAPI->value => ucfirst(ApiChannel::WHAPI->value),
+                                    ApiChannel::ULTRA_MSG->value => ucfirst(ApiChannel::ULTRA_MSG->value)
+                                ]),
                         ]),
                 ])->columnSpanFull()
                     ->columns(2)

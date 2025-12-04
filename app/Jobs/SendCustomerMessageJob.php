@@ -9,6 +9,7 @@ use App\Models\Customer;
 use App\Settings\GeneralSettings;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
+use App\Services\WhatsappMessageService;
 use Filament\Notifications\Notification;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -26,6 +27,7 @@ class SendCustomerMessageJob implements ShouldQueue
     public ?string $api_url;
     public ?string $api_token;
     public ?string $message_template;
+    public ?string $api_channel;
 
     public function __construct(Customer $customer)
     {
@@ -34,8 +36,9 @@ class SendCustomerMessageJob implements ShouldQueue
         $this->api_url = $settings->api_url;
         $this->api_token = $settings->api_token;
         $this->message_template = $settings->message_template;
+        $this->api_channel = $settings->api_channel;
 
-        if (empty($this->api_url) || empty($this->api_token)) {
+        if (empty($this->api_url) || empty($this->api_token) || empty($this->api_channel)) {
             foreach (User::all() as $user) {
                 Notification::make()
                     ->title('Api Configuration Missing')
@@ -58,7 +61,7 @@ class SendCustomerMessageJob implements ShouldQueue
     {
         $customer = $this->customer;
 
-        if (empty($this->api_url) || empty($this->api_token)) {
+        if (empty($this->api_url) || empty($this->api_token) || empty($this->api_channel)) {
             Log::warning("Skipping WhatsApp message for customer ID {$customer->name}: API settings missing.");
             return;
         }
@@ -78,35 +81,8 @@ class SendCustomerMessageJob implements ShouldQueue
         $apiUrl = $this->api_url;
         $token = $this->api_token;
         $template = $this->message_template ?? "Hello {name}!";
+        $channel = $this->api_channel;
 
-        $to = "+92{$customer->phone_number}";
-
-        $messageBody = str_replace(
-            ['{name}', '{phone}', '{id}'],
-            [$customer->name, $customer->phone_number, $customer->id],
-            $template
-        );
-
-        $response = Http::asForm()->post($apiUrl, [
-            'token' => $token,
-            'to' => $to,
-            'body' => $messageBody,
-        ]);
-
-        if ($response->successful()) {
-            $customer->update([
-                'status' => 'sent',
-                'sent_at' => now(),
-                'error' => null,
-            ]);
-            Log::info("Message successfully sent to {$to}");
-        } else {
-            $error = $response->body();
-            $customer->update([
-                'status' => 'failed',
-                'error' => $error,
-            ]);
-            throw new Exception("UltraMsg failed: {$error}");
-        }
+        WhatsappMessageService::send($customer, $apiUrl, $token, $channel, $template);
     }
 }
