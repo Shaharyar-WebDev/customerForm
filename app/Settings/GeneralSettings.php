@@ -27,7 +27,7 @@ class GeneralSettings extends Settings
     public ?string $api_token;
 
     public ?string $message_template;
-    // public ?string $api_channel;
+    public ?string $api_channel;
 
     public static function group(): string
     {
