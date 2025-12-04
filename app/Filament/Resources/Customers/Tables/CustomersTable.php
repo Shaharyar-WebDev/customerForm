@@ -14,6 +14,7 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Notifications\Notification;
+use App\Filament\Support\Actions\CustomAction;
 
 class CustomersTable
 {
@@ -92,7 +93,7 @@ class CustomersTable
                 // ViewAction::make(),
                 EditAction::make()
                     ->slideover(),
-                DeleteAction::make(),
+                CustomAction::safeDelete(),
                 Action::make('resend_whatsapp')
                     ->label('Resend WhatsApp')
                     ->icon('heroicon-o-envelope')
@@ -113,7 +114,7 @@ class CustomersTable
             )
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                    CustomAction::safeBulkDelete(),
                     BulkAction::make('resend_whatsapp')
                         ->label('Resend WhatsApp')
                         ->icon('heroicon-o-envelope')
