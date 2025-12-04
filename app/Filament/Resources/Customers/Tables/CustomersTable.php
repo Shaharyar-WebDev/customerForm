@@ -74,6 +74,7 @@ class CustomersTable
                 TextColumn::make('error')
                     ->label('Remarks')
                     ->toggleable()
+                    ->copyable()
                     ->formatStateUsing(function ($state) {
                         return Str::limit($state, 30, '...');
                     })

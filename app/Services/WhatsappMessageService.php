@@ -64,7 +64,7 @@ class WhatsappMessageService
 
     public static function sendViaWhapi(Customer $customer, string $apiUrl, string $token, string $template)
     {
-        $to = "+92{$customer->phone_number}";
+        $to = "92{$customer->phone_number}";
 
         $messageBody = str_replace(
             ['{name}', '{phone}', '{id}'],
