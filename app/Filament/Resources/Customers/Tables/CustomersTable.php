@@ -147,7 +147,7 @@ class CustomersTable
                             if (!empty($alreadySent)) {
                                 Notification::make()
                                     ->title('WhatsApp Already Sent')
-                                    ->body('Messages already sent for ' . count($alreadySent) . ' Customers')
+                                    ->body('Messages already sent to ' . count($alreadySent) . ' Customers')
                                     ->warning()
                                     ->send();
                             }
