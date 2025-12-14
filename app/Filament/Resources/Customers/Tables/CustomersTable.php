@@ -90,6 +90,7 @@ class CustomersTable
             ])
             ->reorderableColumns()
             ->defaultSort('date', 'desc')
+            ->deferLoading()
             ->poll('10s')
             ->recordActions([
                 // ViewAction::make(),
@@ -111,9 +112,9 @@ class CustomersTable
                             ->send();
                     }),
             ])
-            ->checkIfRecordIsSelectableUsing(
-                fn($record): bool => $record->status === 'failed',
-            )
+            // ->checkIfRecordIsSelectableUsing(
+            //     fn($record): bool => $record->status === 'failed',
+            // )
             ->toolbarActions([
                 BulkActionGroup::make([
                     CustomAction::safeBulkDelete(),
@@ -123,12 +124,31 @@ class CustomersTable
                         ->color('info')
                         ->requiresConfirmation()
                         ->action(function ($records) {
+                            $queued = [];
+                            $alreadySent = [];
+
                             foreach ($records as $record) {
-                                dispatch(new CustomerWhatsappJob($record));
+                                if ($record->status === 'failed') {
+                                    dispatch(new CustomerWhatsappJob($record));
+                                    $queued[] = $record->name;
+                                } elseif ($record->status === 'sent') {
+                                    $alreadySent[] = $record->name;
+                                }
+                            }
+
+                            if (!empty($queued)) {
                                 Notification::make()
                                     ->title('WhatsApp Resend Triggered')
-                                    ->body("Message resend queued for {$record->name}")
+                                    ->body('Message resend queued for ' . count($queued) . ' Customers')
                                     ->success()
+                                    ->send();
+                            }
+
+                            if (!empty($alreadySent)) {
+                                Notification::make()
+                                    ->title('WhatsApp Already Sent')
+                                    ->body('Messages already sent for ' . count($alreadySent) . ' Customers')
+                                    ->warning()
                                     ->send();
                             }
                         }),

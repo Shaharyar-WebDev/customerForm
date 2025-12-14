@@ -46,7 +46,7 @@ class CustomerExport implements FromCollection, WithHeadings, WithMapping
             $customer->visit_frequency,
             $customer->status,
             $customer->error,
-            $customer->sent_at,
+            Carbon::parse($customer->sent_at)->format(app_date_format()),
             $customer->category,
             $customer->remarks
         ];

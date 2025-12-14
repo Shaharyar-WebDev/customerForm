@@ -74,7 +74,7 @@ class WhatsappMessageService
         );
 
         $response = Http::withToken($token)
-            ->post($apiUrl . '/messages/text', [
+            ->post($apiUrl, [
                 'to' => $to,
                 'body' => $messageBody,
             ]);
