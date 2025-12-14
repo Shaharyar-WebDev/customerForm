@@ -24,6 +24,7 @@ class WhatsappMessageService
         $response = match ($channel) {
             ApiChannel::ULTRA_MSG->value => self::sendViaUltraMsg($customer, $apiUrl, $token, $template),
             ApiChannel::WHAPI->value => self::sendViaWhapi($customer, $apiUrl, $token, $template),
+            ApiChannel::APIWAP->value => self::sendViaApiWap($customer, $apiUrl, $token, $template),
         };
 
         if ($response->successful()) {
@@ -80,4 +81,30 @@ class WhatsappMessageService
 
         return $response;
     }
+
+    public static function sendViaApiWap(
+        Customer $customer,
+        string $apiUrl,
+        string $token,
+        string $template
+    ) {
+        $phoneNumber = "+92{$customer->phone_number}";
+
+        $messageBody = str_replace(
+            ['{name}', '{phone}', '{id}'],
+            [$customer->name, $customer->phone_number, $customer->id],
+            $template
+        );
+
+        return Http::withHeaders([
+            'Authorization' => "Bearer {$token}",
+            'Accept' => 'application/json',
+        ])
+            ->post($apiUrl, [
+                'phoneNumber' => $phoneNumber,
+                'message' => $messageBody,
+                'type' => 'text',
+            ]);
+    }
+
 }

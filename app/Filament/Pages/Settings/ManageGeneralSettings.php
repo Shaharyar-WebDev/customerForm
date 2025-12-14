@@ -108,7 +108,8 @@ class ManageGeneralSettings extends SettingsPage
                             Select::make('api_channel')
                                 ->options([
                                     ApiChannel::WHAPI->value => ucfirst(ApiChannel::WHAPI->value),
-                                    ApiChannel::ULTRA_MSG->value => ucfirst(ApiChannel::ULTRA_MSG->value)
+                                    ApiChannel::ULTRA_MSG->value => ucfirst(ApiChannel::ULTRA_MSG->value),
+                                    ApiChannel::APIWAP->value => ucfirst(ApiChannel::APIWAP->value)
                                 ]),
                             // Select::make('action')
                             //     ->options([

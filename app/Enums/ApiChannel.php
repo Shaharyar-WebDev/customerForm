@@ -6,5 +6,6 @@ enum ApiChannel: string
 {
     case WHAPI = 'whapi';
     case ULTRA_MSG = 'ultraMsg';
+    case APIWAP = 'apiwap';
 
 }

@@ -2,7 +2,7 @@
 
 use App\Settings\GeneralSettings;
 
-if (! function_exists('spa_mode')) {
+if (!function_exists('spa_mode')) {
     /**
      * Get the Filament instance
      */
@@ -13,7 +13,7 @@ if (! function_exists('spa_mode')) {
 
 }
 
-if (! function_exists('spa_link')) {
+if (!function_exists('spa_link')) {
     function spa_link()
     {
         $websiteSpaMode = app(GeneralSettings::class)?->website_spa_mode ?? false;
@@ -22,3 +22,11 @@ if (! function_exists('spa_link')) {
         return $websiteSpaMode ? 'wire:navigate' : null;
     }
 }
+
+if (!function_exists('app_date_format')) {
+    function app_date_format()
+    {
+        return 'd-M-Y';
+    }
+}
+

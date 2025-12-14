@@ -103,7 +103,8 @@ class CustomerForm
                             ->placeholder('Select customer category')
                             ->required(),
 
-                        Textarea::make('remarks'),
+                        Textarea::make('remarks')
+                            ->columnSpanFull(),
                     ])
             ]);
     }
