@@ -8,6 +8,7 @@ use Filament\Actions\Action;
 use Filament\Actions\BulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
+use App\Jobs\CustomerWhatsappJob;
 use Filament\Actions\DeleteAction;
 use App\Jobs\SendCustomerMessageJob;
 use Filament\Actions\BulkActionGroup;
@@ -102,7 +103,7 @@ class CustomersTable
                     ->requiresConfirmation()
                     ->visible(fn($record) => $record->status === 'failed')
                     ->action(function ($record) {
-                        dispatch(new SendCustomerMessageJob($record));
+                        dispatch(new CustomerWhatsappJob($record));
                         Notification::make()
                             ->title('WhatsApp Resend Triggered')
                             ->body("Message resend queued for {$record->name}")
@@ -123,7 +124,7 @@ class CustomersTable
                         ->requiresConfirmation()
                         ->action(function ($records) {
                             foreach ($records as $record) {
-                                dispatch(new SendCustomerMessageJob($record));
+                                dispatch(new CustomerWhatsappJob($record));
                                 Notification::make()
                                     ->title('WhatsApp Resend Triggered')
                                     ->body("Message resend queued for {$record->name}")

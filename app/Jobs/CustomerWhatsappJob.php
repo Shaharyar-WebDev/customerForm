@@ -15,7 +15,7 @@ use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Http\Client\RequestException;
 
-class SendCustomerMessageJob implements ShouldQueue
+class CustomerWhatsappJob implements ShouldQueue
 {
     use Queueable;
 

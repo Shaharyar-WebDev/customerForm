@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Jobs\SendCustomerMessageJob;
+use App\Jobs\CustomerWhatsappJob;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Notifications\Notification;
 
@@ -18,6 +18,7 @@ class Customer extends Model
         'error',
         'sent_at',
         'category',
+        'remarks'
     ];
 
     // Optional: cast JSON field to array automatically
@@ -28,7 +29,7 @@ class Customer extends Model
     public static function booted()
     {
         static::created(function ($customer) {
-            dispatch(new SendCustomerMessageJob($customer))->afterCommit();
+            dispatch(new CustomerWhatsappJob($customer))->afterCommit();
         });
     }
 }

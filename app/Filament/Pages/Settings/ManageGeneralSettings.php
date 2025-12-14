@@ -3,7 +3,7 @@
 namespace App\Filament\Pages\Settings;
 
 use BackedEnum;
-use App\ApiChannel;
+use App\Enums\ApiChannel;
 use Filament\Actions\Action;
 use Filament\Schemas\Schema;
 use Filament\Pages\SettingsPage;
@@ -12,6 +12,7 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Tabs;
+use App\Enums\Action as SettingsAction;
 use Filament\Forms\Components\Textarea;
 use Illuminate\Support\Facades\Storage;
 use Filament\Forms\Components\TextInput;
@@ -104,13 +105,19 @@ class ManageGeneralSettings extends SettingsPage
                                 ->nullable(),
                             TextInput::make('api_token')
                                 ->nullable(),
-                            Textarea::make('message_template')
-                                ->nullable(),
                             Select::make('api_channel')
                                 ->options([
                                     ApiChannel::WHAPI->value => ucfirst(ApiChannel::WHAPI->value),
                                     ApiChannel::ULTRA_MSG->value => ucfirst(ApiChannel::ULTRA_MSG->value)
                                 ]),
+                            // Select::make('action')
+                            //     ->options([
+                            //         SettingsAction::SEND_MESSAGE->value => ucfirst(SettingsAction::SEND_MESSAGE->value),
+                            //         // SettingsAction::ADD_TO_GROUP->value => ucfirst(SettingsAction::ADD_TO_GROUP->value),
+                            //         SettingsAction::ADD_TO_COMMUNITY->value => ucfirst(SettingsAction::ADD_TO_COMMUNITY->value),
+                            //     ]),
+                            Textarea::make('message_template')
+                                ->nullable(),
                         ]),
                 ])->columnSpanFull()
                     ->columns(2)

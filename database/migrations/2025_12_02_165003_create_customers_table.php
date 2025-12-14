@@ -24,6 +24,7 @@ return new class extends Migration {
                 'failed'
             ])
                 ->default('pending');
+            $table->text('remarks')->nullable();
             $table->text('error')->nullable();
             $table->dateTime('sent_at')->nullable();
             $table->timestamps();

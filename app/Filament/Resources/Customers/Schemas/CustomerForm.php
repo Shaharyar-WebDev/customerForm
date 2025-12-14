@@ -6,6 +6,8 @@ use Filament\Schemas\Schema;
 use App\Settings\GeneralSettings;
 use Filament\Forms\Components\Select;
 use Filament\Schemas\Components\Grid;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\DatePicker;
@@ -47,23 +49,29 @@ class CustomerForm
                             ->schema([
                                 Grid::make(2)
                                     ->schema([
-                                        TextInput::make('frequently_purchased_items.fusing')
+                                        TagsInput::make('frequently_purchased_items.fusing')
                                             ->label('Fusing')
+                                            ->reorderable()
                                             ->placeholder('Qty or info'),
-                                        TextInput::make('frequently_purchased_items.elastic')
+                                        TagsInput::make('frequently_purchased_items.elastic')
                                             ->label('Elastic')
+                                            ->reorderable()
                                             ->placeholder('Qty or info'),
-                                        TextInput::make('frequently_purchased_items.sewing_thread')
+                                        TagsInput::make('frequently_purchased_items.sewing_thread')
                                             ->label('Sewing Thread')
+                                            ->reorderable()
                                             ->placeholder('Qty or info'),
-                                        TextInput::make('frequently_purchased_items.buttons')
+                                        TagsInput::make('frequently_purchased_items.buttons')
                                             ->label('Buttons')
+                                            ->reorderable()
                                             ->placeholder('Qty or info'),
-                                        TextInput::make('frequently_purchased_items.accessories')
+                                        TagsInput::make('frequently_purchased_items.accessories')
                                             ->label('Accessories')
+                                            ->reorderable()
                                             ->placeholder('Qty or info'),
-                                        TextInput::make('frequently_purchased_items.others')
+                                        TagsInput::make('frequently_purchased_items.others')
                                             ->label('Others')
+                                            ->reorderable()
                                             ->placeholder('Qty or info'),
                                     ])
                             ])
@@ -90,9 +98,12 @@ class CustomerForm
                                 'distributor' => 'Distributor / Supplier',
                                 'retailer' => 'Retailer',
                                 'tailor' => 'Tailor',
+                                'other' => 'Other'
                             ])
                             ->placeholder('Select customer category')
                             ->required(),
+
+                        Textarea::make('remarks'),
                     ])
             ]);
     }

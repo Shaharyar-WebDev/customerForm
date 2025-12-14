@@ -3,8 +3,8 @@
 namespace App\Services;
 
 use Exception;
-use App\ApiChannel;
 use App\Models\Customer;
+use App\Enums\ApiChannel;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
 
